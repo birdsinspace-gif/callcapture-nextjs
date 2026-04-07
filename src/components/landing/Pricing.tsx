@@ -15,7 +15,7 @@ const Pricing = () => (
         transition={{ duration: 0.6 }}
       >
         <h2 className="font-display text-3xl font-extrabold tracking-tight text-foreground md:text-5xl">
-          Simple, Scalable Pricing
+          Simple, Scalable Pricing For That Ass
         </h2>
         <p className="mx-auto mt-4 max-w-lg text-lg text-muted-foreground">
           Flat monthly pricing. No contracts. Built to pay for itself with just
