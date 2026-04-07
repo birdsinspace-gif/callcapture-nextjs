@@ -1,25 +1,25 @@
-import Navbar from "@/components/landing/Navbar";
-import Hero from "@/components/landing/Hero";
-import Problem from "@/components/landing/Problem";
-import Value from "@/components/landing/Value";
-import HowItWorks from "@/components/landing/HowItWorks";
-import WhoItsFor from "@/components/landing/WhoItsFor";
-import Pricing from "@/components/landing/Pricing";
-import FinalCTA from "@/components/landing/FinalCTA";
-import Footer from "@/components/landing/Footer";
+import Navbar from '@/components/landing/Navbar';
+import Hero from '@/components/landing/Hero';
+import Value from '@/components/landing/Value';
+import HowItWorks from '@/components/landing/HowItWorks';
+import BeTheFirst from '@/components/landing/BeTheFirst'; // or Problem.tsx if you prefer
+import WhosItFor from '@/components/landing/WhosItFor';
+import Pricing from '@/components/landing/Pricing';
+import FinalCTA from '@/components/landing/FinalCTA';
+import Footer from '@/components/landing/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <>
       <Navbar />
       <Hero />
-      <Problem />
       <Value />
       <HowItWorks />
-      <WhoItsFor />
+      <BeTheFirst />
+      <WhosItFor />
       <Pricing />
       <FinalCTA />
       <Footer />
-    </div>
+    </>
   );
 }
