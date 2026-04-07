@@ -1,71 +1,41 @@
-"use client";
+'use client';
+import { ArrowRight } from 'lucide-react';
 
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { Phone } from "lucide-react";
+export default function Hero() {
+  return (
+    <section className="pt-32 pb-24 px-6 bg-gradient-to-b from-zinc-950 to-zinc-900">
+      <div className="max-w-4xl mx-auto text-center">
+        <div className="inline-flex items-center gap-2 bg-zinc-900 border border-zinc-700 rounded-full px-5 py-2 mb-8">
+          <span className="text-yellow-400">⚡</span>
+          <span className="text-sm font-medium">Missed calls = missed revenue</span>
+        </div>
 
-const fade = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.15, duration: 0.6, ease: "easeOut" },
-  }),
-};
+        <h1 className="text-6xl md:text-7xl font-bold tracking-tighter mb-6 leading-tight">
+          CallCapture —<br />
+          Turn Missed Calls<br />
+          Into <span className="text-yellow-400">Captured Clients</span>
+        </h1>
 
-const Hero = () => (
-  <section className="bg-hero relative overflow-hidden">
-    <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,hsl(220_80%_56%/0.08),transparent_60%)]" />
-    <div className="container relative mx-auto px-6 pb-24 pt-32 md:pb-32 md:pt-40">
-      <motion.div
-        className="mx-auto max-w-3xl text-center"
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div
-          custom={0}
-          variants={fade}
-          className="mb-6 inline-flex items-center gap-2 rounded-full border border-hero-muted/20 bg-hero-foreground/5 px-4 py-1.5 text-sm text-hero-muted"
-        >
-          <Phone className="h-3.5 w-3.5" />
-          Built for high-value inbound businesses
-        </motion.div>
+        <p className="text-2xl text-zinc-400 mb-10 max-w-2xl mx-auto">
+          Built for high-value inbound businesses.<br />
+          Instant SMS response → capture key details → deliver clean, ready-to-follow-up leads.
+        </p>
 
-        <motion.h1
-          custom={1}
-          variants={fade}
-          className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-hero-foreground md:text-6xl lg:text-7xl"
-        >
-          Turn Missed Calls Into{" "}
-          <span className="text-gradient">Captured Clients</span>{" "}
-          Automatically
-        </motion.h1>
-
-        <motion.p
-          custom={2}
-          variants={fade}
-          className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-hero-muted md:text-xl"
-        >
-          When your team is busy or unavailable, CallCapture instantly responds
-          to inbound callers, captures their information, and helps you convert
-          more opportunities without lifting a finger.
-        </motion.p>
-
-        <motion.div
-          custom={3}
-          variants={fade}
-          className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
-        >
-          <Button variant="hero" size="lg" className="h-12 px-8 text-base">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          <a 
+            href="#pricing" 
+            className="bg-yellow-500 hover:bg-yellow-400 text-zinc-950 px-10 py-4 rounded-2xl text-lg font-semibold flex items-center justify-center gap-3 transition-all"
+          >
+            Start 14-Day Free Trial
+            <ArrowRight className="w-5 h-5" />
+          </a>
+          <button className="border border-zinc-700 hover:border-zinc-500 px-8 py-4 rounded-2xl text-lg font-medium transition-all">
             Try the Live Demo
-          </Button>
-          <Button variant="heroOutline" size="lg" className="h-12 px-8 text-base">
-            Book a Call
-          </Button>
-        </motion.div>
-      </motion.div>
-    </div>
-  </section>
-);
+          </button>
+        </div>
 
-export default Hero;
+        <p className="text-sm text-zinc-500 mt-8">No credit card required • No setup fee • Cancel anytime</p>
+      </div>
+    </section>
+  );
+}
