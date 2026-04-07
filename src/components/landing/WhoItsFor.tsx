@@ -1,53 +1,25 @@
-"use client";
+export default function WhosItFor() {
+  const industries = [
+    "Medical aesthetics — Med spas & cosmetic clinics",
+    "Legal intake — Law firms & case intake teams",
+    "Professional services — Consulting & financial advisory",
+    "Appointment-based businesses",
+    "Any inbound-dependent high-value service",
+  ];
 
-import { motion } from "framer-motion";
-import { Sparkles, Scale, Briefcase, CalendarCheck, PhoneIncoming } from "lucide-react";
-
-const categories = [
-  { icon: Sparkles, label: "Medical aesthetics", desc: "Med spas, cosmetic clinics" },
-  { icon: Scale, label: "Legal intake", desc: "Law firms, case intake teams" },
-  { icon: Briefcase, label: "Professional services", desc: "Consulting, financial advisory" },
-  { icon: CalendarCheck, label: "Appointment-based businesses", desc: "Any scheduled-service provider" },
-  { icon: PhoneIncoming, label: "Inbound-dependent businesses", desc: "Any business that depends on inbound calls" },
-];
-
-const WhoItsFor = () => (
-  <section className="bg-hero py-24 md:py-32">
-    <div className="container mx-auto px-6">
-      <motion.h2
-        className="text-center font-display text-3xl font-extrabold tracking-tight text-hero-foreground md:text-5xl"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        Built for High-Intent{" "}
-        <span className="text-gradient">Inbound Businesses</span>
-      </motion.h2>
-
-      <div className="mx-auto mt-14 grid max-w-4xl gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {categories.map((cat, i) => {
-          const Icon = cat.icon;
-          return (
-            <motion.div
-              key={i}
-              className="rounded-xl border border-hero-muted/15 bg-hero-foreground/[0.03] p-6"
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.08, duration: 0.5 }}
-            >
-              <Icon className="mb-3 h-6 w-6 text-primary" />
-              <h3 className="font-display text-base font-bold text-hero-foreground">
-                {cat.label}
-              </h3>
-              <p className="mt-1 text-sm text-hero-muted">{cat.desc}</p>
-            </motion.div>
-          );
-        })}
+  return (
+    <section className="py-24 px-6 bg-zinc-900">
+      <div className="max-w-6xl mx-auto">
+        <h2 className="text-5xl font-bold tracking-tight text-center mb-16">Built for High-Intent Inbound Businesses</h2>
+        
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {industries.map((industry, i) => (
+            <div key={i} className="bg-zinc-950 border border-zinc-800 rounded-3xl p-8 hover:border-yellow-500/30 transition">
+              <p className="text-lg">{industry}</p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  </section>
-);
-
-export default WhoItsFor;
+    </section>
+  );
+}
