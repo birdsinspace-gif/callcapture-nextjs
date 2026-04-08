@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { XCircle } from "lucide-react";
 
 const bullets = [
-  "Most callers don\u2019t leave voicemails",
+  "Most callers don’t leave voicemails",
   "They move on to the next provider within minutes",
   "Every missed call is a lost opportunity",
 ];
@@ -12,6 +12,7 @@ const bullets = [
 const Problem = () => (
   <section className="bg-background py-24 md:py-32">
     <div className="container mx-auto px-6">
+      {/* Header */}
       <motion.div
         className="mx-auto max-w-2xl text-center"
         initial={{ opacity: 0, y: 20 }}
@@ -25,6 +26,7 @@ const Problem = () => (
         </h2>
       </motion.div>
 
+      {/* Pain bullets */}
       <div className="mx-auto mt-14 grid max-w-3xl gap-5 md:grid-cols-3">
         {bullets.map((text, i) => (
           <motion.div
@@ -42,6 +44,34 @@ const Problem = () => (
           </motion.div>
         ))}
       </div>
+
+      {/* 🔥 MONEY SECTION (NEW) */}
+      <motion.div
+        className="mx-auto mt-20 max-w-3xl text-center"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.6 }}
+      >
+        <h3 className="text-xl font-semibold text-foreground md:text-2xl">
+          Missed Calls = Lost Revenue
+        </h3>
+
+        <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {["$500 job", "$1,500 job", "$5,000+ job"].map((item, i) => (
+            <div
+              key={i}
+              className="rounded-lg border border-border bg-muted/30 px-6 py-5 text-lg font-semibold text-foreground"
+            >
+              {item}
+            </div>
+          ))}
+        </div>
+
+        <p className="mx-auto mt-8 max-w-xl text-base leading-relaxed text-muted-foreground md:text-lg">
+          Miss just a few calls per week and you’re losing thousands every month.
+        </p>
+      </motion.div>
     </div>
   </section>
 );
