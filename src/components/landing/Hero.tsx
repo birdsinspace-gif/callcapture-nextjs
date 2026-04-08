@@ -28,7 +28,7 @@ const Hero = () => (
           className="mb-6 inline-flex items-center gap-2 rounded-full border border-hero-muted/20 bg-hero-foreground/5 px-4 py-1.5 text-sm text-hero-muted"
         >
           <Phone className="h-3.5 w-3.5" />
-          Built for high-value inbound businesses
+          Stop losing jobs from missed calls
         </motion.div>
 
         <motion.h1
@@ -36,9 +36,8 @@ const Hero = () => (
           variants={fade}
           className="font-display text-4xl font-extrabold leading-[1.1] tracking-tight text-hero-foreground md:text-6xl lg:text-7xl"
         >
-          Turn Missed Calls Into{" "}
-          <span className="text-gradient">Captured Clients</span>{" "}
-          Automatically
+          Stop Losing Jobs From{" "}
+          <span className="text-gradient">Missed Calls</span>
         </motion.h1>
 
         <motion.p
@@ -46,22 +45,41 @@ const Hero = () => (
           variants={fade}
           className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-hero-muted md:text-xl"
         >
-          When your team is busy or unavailable, CallCapture instantly responds
-          to inbound callers, captures their information, and helps you convert
-          more opportunities without lifting a finger.
+          When you miss a call, CallCapture instantly texts the customer,
+          captures their info, and helps you turn it into a booked job.
         </motion.p>
 
         <motion.div
           custom={3}
           variants={fade}
+          className="mt-6 text-sm text-hero-muted"
+        >
+          Close just 1 job and it pays for itself.
+        </motion.div>
+
+        <motion.div
+          custom={4}
+          variants={fade}
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
           <Button variant="hero" size="lg" className="h-12 px-8 text-base">
-            Try the Live Demo
+            Start Free 14-Day Trial
           </Button>
-          <Button variant="heroOutline" size="lg" className="h-12 px-8 text-base">
-            Book a Call
+          <Button
+            variant="heroOutline"
+            size="lg"
+            className="h-12 px-8 text-base"
+          >
+            Book a Demo
           </Button>
+        </motion.div>
+
+        <motion.div
+          custom={5}
+          variants={fade}
+          className="mt-6 text-xs text-hero-muted"
+        >
+          If we don’t capture at least 3 real inbound leads, you don’t pay.
         </motion.div>
       </motion.div>
     </div>
