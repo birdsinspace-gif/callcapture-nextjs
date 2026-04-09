@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Pricing = () => (
   <section className="bg-background py-24 md:py-32">
@@ -49,8 +49,13 @@ const Pricing = () => (
           ))}
         </ul>
 
-        <Button variant="default" size="lg" className="mt-8 w-full h-12 text-base font-semibold">
-          Get Started
+        <Button
+          asChild
+          variant="default"
+          size="lg"
+          className="mt-8 h-12 w-full text-base font-semibold"
+        >
+          <a href="#book">Get Started</a>
         </Button>
 
         <p className="mt-4 text-xs text-muted-foreground">
