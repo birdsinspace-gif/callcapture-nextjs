@@ -19,7 +19,7 @@ const BookingSection = () => (
               page is fully clickable while the final scheduler gets wired in.
             </p>
             <div className="mt-8 rounded-2xl border border-primary/15 bg-primary/5 p-5 text-sm text-muted-foreground">
-              Same live demo line as ServiceLock:{" "}
+              Reach us directly at:{" "}
               <span className="font-semibold text-foreground">
                 {DISPLAY_NUMBER}
               </span>
