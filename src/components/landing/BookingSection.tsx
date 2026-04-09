@@ -19,7 +19,7 @@ const BookingSection = () => (
               page is fully clickable while the final scheduler gets wired in.
             </p>
             <div className="mt-8 rounded-2xl border border-primary/15 bg-primary/5 p-5 text-sm text-muted-foreground">
-              Same live demo line as ServiceLock:{" "}
+              Reach us directly at:{" "}
               <span className="font-semibold text-foreground">
                 {DISPLAY_NUMBER}
               </span>
@@ -84,7 +84,7 @@ const BookingSection = () => (
                 <Button type="submit" variant="hero" size="lg" className="h-12 flex-1">
                   Send Request
                 </Button>
-                <Button asChild variant="heroOutline" size="lg" className="h-12 flex-1">
+                <Button asChild variant="hero" size="lg" className="h-12 flex-1">
                   <a href={BOOKING_URL} target="_blank" rel="noreferrer">
                     Open Calendly
                   </a>
