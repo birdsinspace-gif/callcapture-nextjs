@@ -80,15 +80,21 @@ const BookingSection = () => (
                 className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground outline-none transition focus:border-primary"
               />
 
-              <div className="flex flex-col gap-3 sm:flex-row">
-                <Button type="submit" variant="hero" size="lg" className="h-12 flex-1">
-                  Send Request
+              <div className="space-y-3">
+                <Button type="submit" variant="hero" size="lg" className="h-12 w-full">
+                  Start Free Trial
                 </Button>
-                <Button asChild variant="hero" size="lg" className="h-12 flex-1">
-                  <a href={BOOKING_URL} target="_blank" rel="noreferrer">
-                    Open Calendly
+                <p className="text-center text-sm text-muted-foreground">
+                  Prefer to talk first?{" "}
+                  <a
+                    href={BOOKING_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="font-medium text-primary underline-offset-4 transition hover:underline"
+                  >
+                    Book a demo
                   </a>
-                </Button>
+                </p>
               </div>
 
               <p className="text-xs text-muted-foreground">
