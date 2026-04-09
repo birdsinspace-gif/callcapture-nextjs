@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
 import { Phone } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -62,15 +62,21 @@ const Hero = () => (
           variants={fade}
           className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
         >
-          <Button variant="hero" size="lg" className="h-12 px-8 text-base">
-            Start Free 14-Day Trial
+          <Button
+            asChild
+            variant="hero"
+            size="lg"
+            className="h-12 px-8 text-base"
+          >
+            <a href="#book">Start Free 14-Day Trial</a>
           </Button>
           <Button
+            asChild
             variant="heroOutline"
             size="lg"
             className="h-12 px-8 text-base"
           >
-            Book a Demo
+            <a href="#book">Book a Demo</a>
           </Button>
         </motion.div>
 

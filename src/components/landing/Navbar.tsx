@@ -10,8 +10,8 @@ const Navbar = () => (
         <Phone className="h-5 w-5 text-primary" />
         CallCapture
       </div>
-      <Button variant="hero" size="sm" className="text-sm">
-        Book a Call
+      <Button asChild variant="hero" size="sm" className="text-sm">
+        <a href="#book">Book a Call</a>
       </Button>
     </div>
   </nav>

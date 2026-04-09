@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { DEMO_NUMBER, DISPLAY_NUMBER } from "@/lib/contact";
 
 const FinalCTA = () => (
   <section className="bg-hero relative overflow-hidden py-24 md:py-32">
@@ -22,11 +23,18 @@ const FinalCTA = () => (
           adding headcount.
         </p>
         <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
-          <Button variant="hero" size="lg" className="h-12 px-8 text-base">
-            Try the Demo
+          <Button asChild variant="hero" size="lg" className="h-12 px-8 text-base">
+            <a href={`tel:${DEMO_NUMBER}`} aria-label={`Call demo at ${DISPLAY_NUMBER}`}>
+              Try the Demo
+            </a>
           </Button>
-          <Button variant="heroOutline" size="lg" className="h-12 px-8 text-base">
-            Book a Call
+          <Button
+            asChild
+            variant="heroOutline"
+            size="lg"
+            className="h-12 px-8 text-base"
+          >
+            <a href="#book">Book a Call</a>
           </Button>
         </div>
       </motion.div>
