@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { BOOKING_URL, DISPLAY_NUMBER, FORM_EMAIL } from "@/lib/contact";
+import { BOOKING_URL, DEMO_NUMBER, DISPLAY_NUMBER, FORM_EMAIL } from "@/lib/contact";
 
 const BookingSection = () => (
   <section id="book" className="bg-background py-24 md:py-32">
@@ -20,9 +20,13 @@ const BookingSection = () => (
             </p>
             <div className="mt-8 rounded-2xl border border-primary/15 bg-primary/5 p-5 text-sm text-muted-foreground">
               Same live demo line as ServiceLock:{" "}
-              <span className="font-semibold text-foreground">
+              <a
+                href={`tel:${DEMO_NUMBER}`}
+                className="font-semibold text-foreground underline-offset-4 transition hover:text-primary hover:underline"
+                aria-label={`Call demo at ${DISPLAY_NUMBER}`}
+              >
                 {DISPLAY_NUMBER}
-              </span>
+              </a>
             </div>
           </div>
 
@@ -96,11 +100,6 @@ const BookingSection = () => (
                   </a>
                 </p>
               </div>
-
-              <p className="text-xs text-muted-foreground">
-                Open Calendly is using a temporary generic link for now. Swap
-                the BOOKING_URL constant later with your real scheduling URL.
-              </p>
             </form>
           </div>
         </div>
