@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Phone } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { DEMO_NUMBER, DISPLAY_NUMBER } from "@/lib/contact";
 
 const fade = {
   hidden: { opacity: 0, y: 20 },
@@ -52,9 +53,9 @@ const Hero = () => (
         <motion.div
           custom={3}
           variants={fade}
-          className="mt-6 text-sm text-hero-muted"
+          className="mx-auto mt-8 inline-flex items-center rounded-full border border-primary/20 bg-primary/10 px-5 py-2 text-sm font-semibold tracking-wide text-primary md:text-base"
         >
-          Close just 1 job and it pays for itself.
+          Missed calls = lost money
         </motion.div>
 
         <motion.div
@@ -76,7 +77,10 @@ const Hero = () => (
             size="lg"
             className="h-12 px-8 text-base"
           >
-            <a href="#book">Book a Demo</a>
+            <a href={`tel:${DEMO_NUMBER}`} aria-label={`Call demo at ${DISPLAY_NUMBER}`}>
+              <Phone className="h-4 w-4" />
+              Call Demo
+            </a>
           </Button>
         </motion.div>
 

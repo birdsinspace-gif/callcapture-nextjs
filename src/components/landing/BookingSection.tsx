@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { BOOKING_URL, DISPLAY_NUMBER, FORM_EMAIL } from "@/lib/contact";
+import { BOOKING_URL, DEMO_NUMBER, DISPLAY_NUMBER, FORM_EMAIL } from "@/lib/contact";
 
 const BookingSection = () => (
   <section id="book" className="bg-background py-24 md:py-32">
@@ -14,15 +14,18 @@ const BookingSection = () => (
               Start the conversation without losing the lead
             </h2>
             <p className="mt-5 text-base leading-relaxed text-muted-foreground md:text-lg">
-              Fill this out and we’ll have the booking details in one place.
-              For now, there’s also a temporary Calendly handoff below so the
-              page is fully clickable while the final scheduler gets wired in.
+              Fill this out and we’ll have the booking details in one place so
+              your team can follow up quickly.
             </p>
             <div className="mt-8 rounded-2xl border border-primary/15 bg-primary/5 p-5 text-sm text-muted-foreground">
               Reach us directly at:{" "}
-              <span className="font-semibold text-foreground">
+              <a
+                href={`tel:${DEMO_NUMBER}`}
+                className="font-semibold text-foreground underline-offset-4 transition hover:text-primary hover:underline"
+                aria-label={`Call demo at ${DISPLAY_NUMBER}`}
+              >
                 {DISPLAY_NUMBER}
-              </span>
+              </a>
             </div>
           </div>
 
@@ -96,11 +99,6 @@ const BookingSection = () => (
                   </a>
                 </p>
               </div>
-
-              <p className="text-xs text-muted-foreground">
-                Open Calendly is using a temporary generic link for now. Swap
-                the BOOKING_URL constant later with your real scheduling URL.
-              </p>
             </form>
           </div>
         </div>
