@@ -7,6 +7,7 @@ import WhoItsFor from "@/components/landing/WhoItsFor";
 import Pricing from "@/components/landing/Pricing";
 import BookingSection from "@/components/landing/BookingSection";
 import FounderNote from "@/components/landing/FounderNote";
+import FAQ from "@/components/landing/FAQ";
 import FinalCTA from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
 
@@ -22,6 +23,7 @@ export default function Home() {
       <Pricing />
       <BookingSection />
       <FounderNote />
+      <FAQ />
       <FinalCTA />
       <Footer />
     </div>
