@@ -87,9 +87,9 @@ const Hero = () => (
         <motion.div
           custom={5}
           variants={fade}
-          className="mt-6 text-xs text-hero-muted"
+          className="mx-auto mt-6 max-w-3xl text-xs leading-relaxed text-hero-muted"
         >
-          If we don’t capture at least 3 real inbound leads, you don’t pay.
+          No credit card required · Setup in 15 minutes · Cancel anytime · Keep all captured leads
         </motion.div>
       </motion.div>
     </div>

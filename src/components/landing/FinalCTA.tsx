@@ -37,6 +37,9 @@ const FinalCTA = () => (
             <a href="#book">Book a Call</a>
           </Button>
         </div>
+        <p className="mx-auto mt-6 max-w-3xl text-xs leading-relaxed text-hero-muted">
+          No credit card required · Setup in 15 minutes · Cancel anytime · Keep all captured leads
+        </p>
       </motion.div>
     </div>
   </section>
