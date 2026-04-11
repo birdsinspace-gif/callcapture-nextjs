@@ -6,6 +6,7 @@ import HowItWorks from "@/components/landing/HowItWorks";
 import WhoItsFor from "@/components/landing/WhoItsFor";
 import Pricing from "@/components/landing/Pricing";
 import BookingSection from "@/components/landing/BookingSection";
+import FAQ from "@/components/landing/FAQ";
 import FinalCTA from "@/components/landing/FinalCTA";
 import Footer from "@/components/landing/Footer";
 
@@ -20,6 +21,7 @@ export default function Home() {
       <WhoItsFor />
       <Pricing />
       <BookingSection />
+      <FAQ />
       <FinalCTA />
       <Footer />
     </div>
