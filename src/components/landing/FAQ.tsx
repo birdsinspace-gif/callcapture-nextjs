@@ -38,7 +38,7 @@ const faqs = [
 ];
 
 const FAQ = () => (
-  <section className="bg-background py-24 md:py-32">
+  <section id="faq" className="bg-background py-24 md:py-32">
     <div className="container mx-auto px-6">
       <motion.div
         className="mx-auto max-w-3xl text-center"
