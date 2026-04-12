@@ -82,7 +82,7 @@ const BookingSection = () => {
                 your team can follow up quickly.
               </p>
               <div className="mt-8 rounded-2xl border border-primary/15 bg-primary/5 p-5 text-sm text-muted-foreground">
-                Reach us directly at:{" "}
+                Call the demo line anytime:{" "}
                 <a
                   href={`tel:${DEMO_NUMBER}`}
                   className="font-semibold text-foreground underline-offset-4 transition hover:text-primary hover:underline"
