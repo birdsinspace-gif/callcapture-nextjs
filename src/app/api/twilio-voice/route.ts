@@ -1,4 +1,3 @@
-import { NextResponse } from "next/server";
 import twilio from "twilio";
 
 export const runtime = "nodejs";
@@ -65,10 +64,7 @@ function xmlResponse(body: string) {
 }
 
 export async function GET() {
-  return NextResponse.json({
-    ok: true,
-    route: "/api/twilio-voice",
-  });
+  return xmlResponse(buildTwiml());
 }
 
 export async function POST(request: Request) {
