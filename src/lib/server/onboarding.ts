@@ -1,4 +1,9 @@
 import { Redis } from "@upstash/redis";
+import {
+  CALLCAPTURE_REPLY_TO_EMAIL,
+  hasCallCaptureMailTransport,
+  sendCallCaptureEmail,
+} from "@/lib/server/mail";
 
 type SequenceStepKey =
   | "welcome"
@@ -48,18 +53,10 @@ type ProcessDueOptions = {
 const DAY_IN_MS = 24 * 60 * 60 * 1000;
 const BRAND = "callcapture";
 const BRAND_NAME = "CallCapture";
-const DEFAULT_REPLY_TO = "KyleDChristopher@gmail.com";
 const CHECKOUT_URL =
   process.env.CALLCAPTURE_ONBOARDING_CHECKOUT_URL ||
   process.env.CALLCAPTURE_TRIAL_CHECKOUT_URL ||
   "";
-const FROM_EMAIL =
-  process.env.CALLCAPTURE_ONBOARDING_FROM_EMAIL ||
-  process.env.CALLCAPTURE_TRIAL_FROM_EMAIL ||
-  "";
-const REPLY_TO =
-  process.env.CALLCAPTURE_ONBOARDING_REPLY_TO || DEFAULT_REPLY_TO;
-const RESEND_API_KEY = process.env.RESEND_API_KEY || "";
 const redis = createRedisClient();
 
 const SEQUENCE: SequenceStep[] = [
@@ -138,7 +135,7 @@ function createRedisClient() {
 }
 
 function hasOnboardingInfrastructure() {
-  return Boolean(redis && RESEND_API_KEY && FROM_EMAIL);
+  return Boolean(redis && hasCallCaptureMailTransport());
 }
 
 function normalizeEmail(email: string) {
@@ -204,37 +201,16 @@ async function sendSequenceEmail(
   lead: CallCaptureOnboardingLead,
   step: SequenceStep
 ) {
-  if (!RESEND_API_KEY || !FROM_EMAIL) {
+  if (!hasCallCaptureMailTransport()) {
     return { configured: false, messageId: null };
   }
 
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: `Kyle <${FROM_EMAIL}>`,
-      to: [lead.email],
-      reply_to: lead.replyTo || REPLY_TO,
-      subject: step.subject,
-      html: buildEmailHtml(lead, step),
-    }),
-    cache: "no-store",
+  return sendCallCaptureEmail({
+    to: lead.email,
+    replyTo: CALLCAPTURE_REPLY_TO_EMAIL,
+    subject: step.subject,
+    html: buildEmailHtml(lead, step),
   });
-
-  const payload = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    throw new Error(
-      payload?.message ||
-        payload?.error?.message ||
-        `Resend request failed with status ${response.status}.`
-    );
-  }
-
-  return { configured: true, messageId: payload?.id ?? null };
 }
 
 function buildFreshLead(input: RegisterLeadInput): CallCaptureOnboardingLead {
@@ -247,7 +223,7 @@ function buildFreshLead(input: RegisterLeadInput): CallCaptureOnboardingLead {
     signupDate: now.toISOString(),
     onboardingStatus: "active",
     trialEndDate: addDays(now, 14).toISOString(),
-    replyTo: input.replyTo || REPLY_TO,
+    replyTo: CALLCAPTURE_REPLY_TO_EMAIL,
     companyName: input.companyName || "",
     phone: input.phone || "",
     sendHistory: [],

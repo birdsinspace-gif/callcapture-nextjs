@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
 import { registerOnboardingLead } from "@/lib/server/onboarding";
+import {
+  CALLCAPTURE_REPLY_TO_EMAIL,
+  sendCallCaptureEmail,
+} from "@/lib/server/mail";
 
 export const runtime = "nodejs";
 const DEFAULT_ALERT_EMAIL = "KyleDChristopher@gmail.com";
@@ -35,41 +39,15 @@ function buildInternalEmailHtml(body: Required<TrialRequestBody>) {
 }
 
 async function sendInternalNotification(body: Required<TrialRequestBody>) {
-  const resendApiKey = process.env.RESEND_API_KEY;
   const alertEmail =
     process.env.CALLCAPTURE_TRIAL_ALERT_EMAIL || DEFAULT_ALERT_EMAIL;
-  const fromEmail = process.env.CALLCAPTURE_TRIAL_FROM_EMAIL;
 
-  if (!resendApiKey || !alertEmail || !fromEmail) {
-    throw new Error("Missing required CallCapture trial email environment variables.");
-  }
-
-  const response = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${resendApiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from: `Kyle <${fromEmail}>`,
-      to: [alertEmail],
-      reply_to: body.email,
-      subject: `New CallCapture trial request${body.companyName ? ` - ${body.companyName}` : ` - ${body.fullName}`}`,
-      html: buildInternalEmailHtml(body),
-    }),
-    cache: "no-store",
+  await sendCallCaptureEmail({
+    to: alertEmail,
+    replyTo: CALLCAPTURE_REPLY_TO_EMAIL,
+    subject: `New CallCapture trial request${body.companyName ? ` - ${body.companyName}` : ` - ${body.fullName}`}`,
+    html: buildInternalEmailHtml(body),
   });
-
-  const payload = await response.json().catch(() => null);
-
-  if (!response.ok) {
-    const message =
-      payload?.message ||
-      payload?.error?.message ||
-      `Resend request failed with status ${response.status}.`;
-
-    throw new Error(message);
-  }
 }
 
 async function upsertHubSpotContact(body: Required<TrialRequestBody>) {
