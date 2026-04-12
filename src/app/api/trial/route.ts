@@ -1,6 +1,18 @@
 import { NextResponse } from "next/server";
 
 export const runtime = "nodejs";
+const DEFAULT_ALERT_EMAIL = "KyleDChristopher@gmail.com";
+const HUBSPOT_ACCESS_TOKEN =
+  process.env.HUBSPOT_PRIVATE_APP_TOKEN || process.env.HUBSPOT_ACCESS_TOKEN;
+const HUBSPOT_NOTES_PROPERTY =
+  process.env.HUBSPOT_CALLCAPTURE_NOTES_PROPERTY ||
+  process.env.HUBSPOT_NOTES_PROPERTY ||
+  "";
+const HUBSPOT_SOURCE_PROPERTY =
+  process.env.HUBSPOT_CALLCAPTURE_SOURCE_PROPERTY ||
+  process.env.HUBSPOT_SOURCE_PROPERTY ||
+  "";
+const HUBSPOT_SOURCE_VALUE = "callcapture_trial_form";
 
 type TrialRequestBody = {
   fullName?: string;
@@ -23,7 +35,8 @@ function buildInternalEmailHtml(body: Required<TrialRequestBody>) {
 
 async function sendInternalNotification(body: Required<TrialRequestBody>) {
   const resendApiKey = process.env.RESEND_API_KEY;
-  const alertEmail = process.env.CALLCAPTURE_TRIAL_ALERT_EMAIL;
+  const alertEmail =
+    process.env.CALLCAPTURE_TRIAL_ALERT_EMAIL || DEFAULT_ALERT_EMAIL;
   const fromEmail = process.env.CALLCAPTURE_TRIAL_FROM_EMAIL;
 
   if (!resendApiKey || !alertEmail || !fromEmail) {
@@ -37,7 +50,7 @@ async function sendInternalNotification(body: Required<TrialRequestBody>) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: fromEmail,
+      from: `Kyle <${fromEmail}>`,
       to: [alertEmail],
       reply_to: body.email,
       subject: `New CallCapture trial request${body.companyName ? ` - ${body.companyName}` : ` - ${body.fullName}`}`,
@@ -56,6 +69,96 @@ async function sendInternalNotification(body: Required<TrialRequestBody>) {
 
     throw new Error(message);
   }
+}
+
+async function upsertHubSpotContact(body: Required<TrialRequestBody>) {
+  if (!HUBSPOT_ACCESS_TOKEN) {
+    return { configured: false };
+  }
+
+  const [firstName = "", ...rest] = body.fullName.split(/\s+/);
+  const lastName = rest.join(" ");
+  const properties: Record<string, string> = {
+    email: body.email,
+    firstname: firstName,
+    lastname: lastName,
+    company: body.companyName || "",
+    phone: body.phone,
+  };
+
+  if (HUBSPOT_NOTES_PROPERTY) {
+    properties[HUBSPOT_NOTES_PROPERTY] = body.notes || "No notes provided";
+  }
+
+  if (HUBSPOT_SOURCE_PROPERTY) {
+    properties[HUBSPOT_SOURCE_PROPERTY] = HUBSPOT_SOURCE_VALUE;
+  }
+
+  const searchResponse = await fetch(
+    "https://api.hubapi.com/crm/v3/objects/contacts/search",
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        filterGroups: [
+          {
+            filters: [
+              {
+                propertyName: "email",
+                operator: "EQ",
+                value: body.email,
+              },
+            ],
+          },
+        ],
+        properties: ["email"],
+        limit: 1,
+      }),
+      cache: "no-store",
+    }
+  );
+
+  const searchPayload = await searchResponse.json().catch(() => null);
+
+  if (!searchResponse.ok) {
+    throw new Error(
+      searchPayload?.message ||
+        `HubSpot search failed with status ${searchResponse.status}.`
+    );
+  }
+
+  const existingId = searchPayload?.results?.[0]?.id;
+  const endpoint = existingId
+    ? `https://api.hubapi.com/crm/v3/objects/contacts/${existingId}`
+    : "https://api.hubapi.com/crm/v3/objects/contacts";
+  const method = existingId ? "PATCH" : "POST";
+
+  const upsertResponse = await fetch(endpoint, {
+    method,
+    headers: {
+      Authorization: `Bearer ${HUBSPOT_ACCESS_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ properties }),
+    cache: "no-store",
+  });
+
+  const upsertPayload = await upsertResponse.json().catch(() => null);
+
+  if (!upsertResponse.ok) {
+    throw new Error(
+      upsertPayload?.message ||
+        `HubSpot upsert failed with status ${upsertResponse.status}.`
+    );
+  }
+
+  return {
+    configured: true,
+    id: upsertPayload?.id || existingId || null,
+  };
 }
 
 export async function GET() {
@@ -84,6 +187,18 @@ export async function POST(request: Request) {
     }
 
     await sendInternalNotification(body);
+
+    try {
+      const hubspotResult = await upsertHubSpotContact(body);
+      if (hubspotResult.configured) {
+        console.log("CallCapture HubSpot contact synced.", {
+          email: body.email,
+          id: hubspotResult.id,
+        });
+      }
+    } catch (hubspotError) {
+      console.error("CallCapture HubSpot sync failed.", hubspotError);
+    }
 
     return NextResponse.json({
       success: true,
