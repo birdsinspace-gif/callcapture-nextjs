@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { registerOnboardingLead } from "@/lib/server/onboarding";
 
 export const runtime = "nodejs";
 const DEFAULT_ALERT_EMAIL = "KyleDChristopher@gmail.com";
@@ -198,6 +199,18 @@ export async function POST(request: Request) {
       }
     } catch (hubspotError) {
       console.error("CallCapture HubSpot sync failed.", hubspotError);
+    }
+
+    try {
+      await registerOnboardingLead({
+        email: body.email,
+        firstName: body.fullName.split(/\s+/)[0] || body.fullName,
+        companyName: body.companyName,
+        phone: body.phone,
+        replyTo: body.email,
+      });
+    } catch (onboardingError) {
+      console.error("CallCapture onboarding registration failed.", onboardingError);
     }
 
     return NextResponse.json({
